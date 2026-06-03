@@ -615,5 +615,10 @@ const dataResources = [
     description: "Global APIs enabling healthcare applications to read and write standardized medical record data using the FHIR format.",
     link: "https://health.google/health-connect-android/",
     tags: ["Data", "Health", "Computer"]
-  }
+  },
+  {
+    title: "Education Credits",
+    description: "Faculty at eligible institutions can apply for Google Cloud education credits to teach using Google Cloud",
+    link: "https://docs.cloud.google.com/billing/docs/how-to/edu-grants",
+    tags: ["Program", "Health", "Earth", "Engineering", "Humanities", "Computer"]
 ];
