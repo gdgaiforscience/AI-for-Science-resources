@@ -621,5 +621,23 @@ const dataResources = [
     description: "Faculty at eligible institutions can apply for Google Cloud education credits to teach using Google Cloud",
     link: "https://docs.cloud.google.com/billing/docs/how-to/edu-grants",
     tags: ["Program", "Health", "Earth", "Engineering", "Humanities", "Computer"]
+  },
+  {
+    title: "Agent Science Skills",
+    description: "Ready to go Agent 'skills' to accelerate your AI agents",
+    link: "https://github.com/google-deepmind/science-skills",
+    tags: ["Tool", "Health", "Earth", "Engineering", "Humanities", "Computer"]
+  },
+  {
+    title: "Get certified with GEAR",
+    description: "No-cost Google Cloud certification exam prep with instructor-led training and technical mentorship for institutions with GCP",
+    link: "https://developers.google.com/program/gear/getcertified",
+    tags: ["Program", "Health", "Earth", "Engineering", "Humanities", "Computer"]
+  },
+  {
+    title: "Google Cloud Advanced Computing Community",
+    description: "A global community for sharing expertise in HPC, AI, quantum, and any advanced computing technologies",
+    link: "https://sites.google.com/corp/view/advancedcomputingcommunity",
+    tags: ["Knowledge", "Health", "Earth", "Engineering", "Humanities", "Computer"]
   }
 ];
