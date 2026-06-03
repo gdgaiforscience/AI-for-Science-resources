@@ -621,4 +621,5 @@ const dataResources = [
     description: "Faculty at eligible institutions can apply for Google Cloud education credits to teach using Google Cloud",
     link: "https://docs.cloud.google.com/billing/docs/how-to/edu-grants",
     tags: ["Program", "Health", "Earth", "Engineering", "Humanities", "Computer"]
+  }
 ];
