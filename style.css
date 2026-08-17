@@ -1,225 +1,146 @@
-/* General styles for a modern look */
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        background-color: #f4f7f6; /* Light background */
-        color: #333; /* Darker text for readability */
-        margin: 0;
-        padding: 0;
-      }
+:root {
+  --primary-text: #202124;
+  --secondary-text: #5f6368;
+  --border-color: #dadce0;
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --tag-bg: #e8f0fe;
+  --tag-text: #1967d2;
+}
 
-      .mt-10 {
-        margin-top: 2.5rem; /* Equivalent to 10 in Tailwind */
-      }
+body {
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--primary-text);
+  margin: 0;
+  padding: 40px;
+  box-sizing: border-box;
+}
 
-      .text-center {
-        text-align: center;
-      }
+/* Filters */
+.text-center {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.filter-label {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+#domain-filters, #type-filters {
+  margin-bottom: 10px;
+}
+.btnFilter {
+  background-color: var(--card-bg);
+  color: var(--primary-text);
+  border: 1px solid var(--border-color);
+  padding: 6px 16px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin: 0 4px;
+  transition: all 0.2s;
+}
+.btnFilter:hover {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  border-color: var(--tag-text);
+}
+.btnFilter.selected {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  border-color: var(--tag-text);
+  font-weight: bold;
+}
 
-      .btnFilter {
-        display: inline-block;
-        font-weight: 100; /* Slightly bolder font */
-        padding: 0.25rem 0.75rem; /* Adjust padding for better touch targets */
-        margin: 0.25rem; /* Adjust vertical margin */
-        border-radius: 1.5rem; /* More rounded buttons */
-        border: 2px solid transparent; /* Initially transparent border */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
-        color: #000000;
-        background-image: linear-gradient(
-          to bottom,
-          #ceead6,
-          #ceead6
-        ); /* Lighter blue/teal gradient */
-        cursor: pointer;
-        -webkit-appearance: button;
-        transition:
-          background-image 0.1s ease,
-          border-color 0.1s ease,
-          box-shadow 0.1s ease;
-        outline: none; /* Remove default focus outline */
-      }
+/* Header */
+.header-container {
+  margin-bottom: 40px;
+  text-align: center;
+}
 
-      .btnFilter:hover {
-        background-image: linear-gradient(to bottom, #34a853, #34a853); /* Darker hover gradient */
-        border-color: #0d652d; /* Border on hover */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
-      }
+.header-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  font-weight: 400;
+}
 
-      .btnFilter.selected {
-        border-color: #0d652d; /* Border on hover */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
-      }
+.header-container p {
+  font-size: 1.1rem;
+  color: var(--secondary-text);
+  max-width: 900px;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-      .filter-label {
-        display: inline-block; /* Allows labels to sit side-by-side with buttons */
-        margin-right: 0.5rem; /* Adds space to the right of the label */
-        margin-top: 1px;
-        margin-bottom: 1px;
-      }
+/* Grid */
+#resourcesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
 
-      .md\:my-0 {
-        /* Medium breakpoint and above: reset vertical margin */
-      }
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
 
-      .md\:mx-2 {
-        /* Medium breakpoint and above: add horizontal margin */
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-      }
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
 
-      #resourcesContainer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; /* Center items on smaller screens */
-        padding: 1rem;
-      }
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
 
-      #resource {
-        background-color: #fff; /* White card background */
-        border-radius: 0.5rem; /* Rounded corners for cards */
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Subtle card shadow */
-        overflow: hidden;
-        width: calc(100% - 2rem); /* Adjust width with margin */
-        margin: 1rem;
-        transition:
-          transform 0.2s ease-in-out,
-          box-shadow 0.2s ease-in-out;
-        display: flex; /* Use flexbox for card content layout */
-        flex-direction: column; /* Stack content vertically */
-      }
+.card-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+  object-fit: contain;
+  border-radius: 4px;
+}
 
-      #resource:hover {
-        transform: translateY(-4px); /* Slight lift on hover */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-      }
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--primary-text);
+}
 
-      .rounded-md {
-        border-radius: 0.375rem; /* Tailwind default */
-      }
+.card-desc {
+  font-size: 0.95rem;
+  color: var(--secondary-text);
+  line-height: 1.5;
+  flex-grow: 1;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
 
-      .bg-blue-100 {
-        background-color: #d2e3fc; /* Light blue background for header */
-      }
+.card-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
 
-      .text-blue-600 {
-        color: #4285f4; /* Blue text for header */
-      }
-
-      .m-4 {
-        margin: 1rem;
-      }
-
-      .p-2 {
-        padding: 0.5rem;
-      }
-
-      .flex-grow {
-        flex-grow: 1;
-      }
-
-      .flex {
-        display: flex;
-      }
-
-      .flex-col {
-        flex-direction: column;
-      }
-
-      .justify-between {
-        justify-content: space-between;
-      }
-
-      /* Modified Title Styles */
-      #resource .card-title {
-        font-weight: bold;
-        font-size: 0.8rem;
-        color: #174ea6; /* Changed color */
-        text-decoration: none; /* Remove default underline */
-        text-align: center; /* Centered text */
-        display: block; /* Make it a block element for centering */
-        padding: 0.25rem; /* Add some padding */
-      }
-
-      #resource .card-title:hover {
-        text-decoration: underline; /* Add underline on hover */
-      }
-
-      .card-img-top {
-        max-height: 24px;
-        margin: 0 auto 10px;
-        display: block;
-      }
-
-      #description {
-        padding: 0 0.25rem 0.25rem; /* Adjusted padding */
-        color: #555; /* Slightly lighter description text */
-        flex-grow: 1; /* Allow description to take available space */
-        font-size: 0.75rem;
-      }
-
-      #tagsContainer {
-        padding: 0.25rem 0.25rem 0.25rem; /* Adjusted padding */
-        display: flex;
-        justify-content: center; /* Center tags below description */
-        flex-wrap: wrap;
-        gap: 0.1rem; /* Reduced gap between tags */
-      }
-
-      /* Modified Tag Styles */
-      #tagsContainer span {
-        display: inline-block;
-        background-color: #ceead6; /* Muted teal for tags */
-        color: #000; /* Changed font color to black */
-        border-radius: 1rem; /* Slightly less rounded */
-        padding: 0.1rem 0.1rem 0.1rem; /* Reduced padding */
-        font-size: 0.2rem; /* Reduced font size */
-        font-weight: 500;
-      }
-
-      /* Media query for 6 columns on larger screens */
-      @media (min-width: 1200px) {
-        #resource {
-          width: calc(16.666% - 2rem); /* Approximately 6 columns with margin */
-          margin: 0.5rem;
-        }
-
-        #resourcesContainer {
-          justify-content: flex-start; /* Align items to the start on larger screens */
-        }
-      }
-
-      /* Add a class to visually indicate selected buttons */
-      .btnFilter.selected {
-        @apply ring-2 ring-offset-2 ring-teal-400; /* Example: Add a ring */
-        /* You can adjust the styling as needed */
-      }
-
-      /* Media query for 4 columns on medium-large screens */
-      @media (min-width: 992px) and (max-width: 1199px) {
-        #resource {
-          width: calc(20% - 1rem); /* 4 columns with margin */
-          margin: 0.5rem;
-        }
-        #resourcesContainer {
-          justify-content: flex-start;
-        }
-      }
-
-      /* Media query for 3 columns on medium screens */
-      @media (min-width: 768px) and (max-width: 991px) {
-        #resource {
-          width: calc(33.333% - 2rem); /* 3 columns with margin */
-          margin: 0.5rem;
-        }
-        #resourcesContainer {
-          justify-content: flex-start;
-        }
-      }
-
-      /* Media query for 2 columns on small-medium screens */
-      @media (min-width: 576px) and (max-width: 767px) {
-        #resource {
-          width: calc(50% - 2rem); /* 2 columns with margin */
-          margin: 0.5rem;
-        }
-      }
+.tag {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}

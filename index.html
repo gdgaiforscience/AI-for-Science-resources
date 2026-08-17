@@ -1,68 +1,48 @@
-<html>
-  <head>
-    <title>Resource Cards</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Cards</title>
+  <link rel="stylesheet" href="style.css">
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1N15QXYVXM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1N15QXYVXM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-97ZCJH3VGG');
+  </script>
+</head>
+<body>
+  <div class="header-container">
+    <h1>AI for Science Resources</h1>
+    <p>Explore key Google platforms, catalogs, and communities to share, accelerate, and scale your research.</p>
+  </div>
 
-  gtag('config', 'G-97ZCJH3VGG');
-</script>
-  <body>
-    <section class="text-center">
-      <div id="domain-filters">
-        <p class="filter-label">Domain:</p>
-        <button id="Health" class="btnFilter"> Health </button>
-        <button id="Earth" class="btnFilter"> Earth </button>
-        <button id="Engineering" class="btnFilter"> Engineering and Physics </button>
-        <button id="Humanities" class="btnFilter">
-          Humanities
-        </button>
-        <button id="Computer" class="btnFilter">
-          Computer Science
-        </button>
-      </div>
-      <div id="type-filters">
-        <p class="filter-label">Type:</p>
-        <button id="Program" class="btnFilter">
-          Programs and Partnerships
-        </button>
-        <button id="Tool" class="btnFilter">
-          Tools and Platforms
-        </button>
-        <button id="Data" class="btnFilter">
-          Datasets
-        </button>
-        <button id="Knowledge" class="btnFilter">
-          Knowledge
-        </button>
-      </div>
-    </section>
+  <section class="text-center">
+    <div id="domain-filters">
+      <span class="filter-label">Domain:</span>
+      <button id="Health" class="btnFilter">Health</button>
+      <button id="Earth" class="btnFilter">Earth</button>
+      <button id="Engineering" class="btnFilter">Engineering and Physics</button>
+      <button id="Humanities" class="btnFilter">Humanities</button>
+      <button id="Computer" class="btnFilter">Computer Science</button>
+    </div>
+    <div id="type-filters">
+      <span class="filter-label">Type:</span>
+      <button id="Program" class="btnFilter">Programs and Partnerships</button>
+      <button id="Tool" class="btnFilter">Tools and Platforms</button>
+      <button id="Data" class="btnFilter">Datasets</button>
+      <button id="Knowledge" class="btnFilter">Knowledge</button>
+    </div>
+  </section>
 
-    <section
-      id="resourcesContainer"
-      class="w-full flex flex-wrap content-center justify-around mx-auto px-2 py-5 md:px-4 lg:px-10"
-    >
-      <template id="resourceTemplate">
-        <div id="resource" class="border rounded-lg p-4 mb-4 shadow-md bg-white flex flex-col">
-          <a id="imageLink" href="#" target="_blank">
-            <img id="previewImage" class="card-img-top" alt="Resource preview">
-          </a>
-          <a id="title" href="#" target="_blank" class="card-title">Resource Title</a>
-          <p id="description" class="text-gray-700 mb-2 flex-grow">
-            Resource description goes here.
-          </p>
-          <div id="tagsContainer" class="flex flex-wrap gap-1"></div>
-        </div>
-      </template>
-    </section>
+  <div class="grid-container" id="resourcesContainer">
+    <!-- Cards injected here dynamically by index.js -->
+  </div>
 
-    <!-- <script src="https://www.jsdelivr.com/package/npm/link-preview-generator"></script> -->
-    <script src="dataResources.js"></script>
-    <script src="index.js"></script>
-  </body>
+  <script src="dataResources.js"></script>
+  <script src="index.js"></script>
+</body>
 </html>

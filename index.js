@@ -1,13 +1,12 @@
 const resourcesContainer = document.querySelector("#resourcesContainer");
-const resourceTemplate = document.querySelector("template");
 const domainFilters = document.querySelectorAll("#domain-filters .btnFilter");
 const typeFilters = document.querySelectorAll("#type-filters .btnFilter");
 
 let selectedDomain = null;
 let selectedType = null;
 
-async function renderResources() {
-  clearContainer(resourcesContainer);
+function renderResources() {
+  resourcesContainer.innerHTML = "";
 
   let resourcesToDisplay = dataResources.filter((resourceData) => {
     const domainMatch = selectedDomain
@@ -21,77 +20,47 @@ async function renderResources() {
 
   resourcesToDisplay.sort((a, b) => a.link.localeCompare(b.link));
   
-  const cardPromises = resourcesToDisplay.map((resourceData) =>
-    copyTemplateCard(resourceData)
-  );
+  resourcesToDisplay.forEach((resource) => {
+    const card = document.createElement('a');
+    card.href = resource.link;
+    card.className = 'card';
+    card.target = '_blank';
 
-  const cards = await Promise.all(cardPromises);
-  cards.forEach((card) => {
+    const header = document.createElement('div');
+    header.className = 'card-header';
+    
+    const icon = document.createElement('img');
+    const hostname = new URL(resource.link).hostname;
+    icon.src = `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`;
+    icon.alt = resource.title.replace(/\[.*?\]/g, '').trim() + ' icon';
+    icon.className = 'card-icon';
+
+    const title = document.createElement('h2');
+    title.className = 'card-title';
+    title.textContent = resource.title;
+
+    header.appendChild(icon);
+    header.appendChild(title);
+
+    const desc = document.createElement('p');
+    desc.className = 'card-desc';
+    desc.textContent = resource.description;
+
+    const tagsContainer = document.createElement('div');
+    tagsContainer.className = 'card-tags';
+    resource.tags.forEach(tagText => {
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = tagText;
+      tagsContainer.appendChild(tag);
+    });
+
+    card.appendChild(header);
+    card.appendChild(desc);
+    card.appendChild(tagsContainer);
+
     resourcesContainer.appendChild(card);
-
   });
-}
-
-function clearContainer(container) {
-  container.innerHTML = "";
-}
-
-async function copyTemplateCard(resourceData) {
-  const resourceTemplateContent = document.importNode(
-    resourceTemplate.content,
-    true
-  );
-  const card = resourceTemplateContent.querySelector("#resource");
-
-  const title = card.querySelector("#title");
-  title.innerText = resourceData.title;
-  title.href = resourceData.link;
-
-  const imageLink = card.querySelector("#imageLink");
-  imageLink.href = resourceData.link;
-  imageLink.target = "_blank";
-
-  const previewImage = card.querySelector("#previewImage");
-  const hostname = new URL(resourceData.link).hostname;
-  const fallbackImage = `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`;
-
-  // try {
-  //   const corsProxy = "https://cors-anywhere.herokuapp.com/";
-  //   const preview = await linkPreviewGenerator.getLinkPreview(
-  //     `${corsProxy}${resourceData.link}`
-  //   );
-  //   if (preview.images && preview.images.length > 0) {
-  //     previewImage.src = preview.images[0];
-  //   } else {
-  //     previewImage.src = fallbackImage;
-  //   }
-  // } catch (error) {
-  //   console.error("Failed to get link preview", error);
-  //   previewImage.src = fallbackImage;
-  // }
-
-  previewImage.src = fallbackImage;
-  previewImage.alt = resourceData.title;
-
-  const description = card.querySelector("#description");
-  description.innerText = resourceData.description;
-
-  const tagsContainer = card.querySelector("#tagsContainer");
-  resourceData.tags.forEach((resourceDataTag) => {
-      const individualTag = document.createElement("span");
-      individualTag.style.backgroundColor = "#ceead6";
-      individualTag.style.color = "#000";
-      individualTag.style.borderRadius = "0.5rem";
-      individualTag.style.padding = "0.25rem 0.25rem";
-      individualTag.style.fontSize = "0.5rem";
-      individualTag.style.fontWeight = "500";
-      individualTag.style.display = "inline-block";
-      individualTag.textContent = `#${resourceDataTag}`;
-
-      tagsContainer.appendChild(individualTag);
-  });
-
-  return card;
 }
 
 domainFilters.forEach(btn => {
@@ -123,6 +92,5 @@ typeFilters.forEach(btn => {
         renderResources();
     });
 });
-
 
 renderResources();
