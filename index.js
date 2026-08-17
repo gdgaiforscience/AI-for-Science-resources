@@ -81,7 +81,7 @@ async function renderResources() {
       : true;
       
     // If there is a search query, filter out items with low similarity score
-    const searchMatch = queryEmbedding ? resourceData.score > 0.15 : true;
+    const searchMatch = queryEmbedding ? resourceData.score > 0.5 : true;
     
     return domainMatch && typeMatch && searchMatch;
   });
