@@ -1,24 +1,98 @@
+import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.16.0';
+
+env.allowLocalModels = false;
+
 const resourcesContainer = document.querySelector("#resourcesContainer");
 const domainFilters = document.querySelectorAll("#domain-filters .btnFilter");
 const typeFilters = document.querySelectorAll("#type-filters .btnFilter");
+const searchInput = document.querySelector("#searchInput");
+const searchStatus = document.querySelector("#searchStatus");
 
 let selectedDomain = null;
 let selectedType = null;
+let searchQuery = "";
+let extractor = null;
+let searchDebounceTimeout = null;
 
-function renderResources() {
+// Compute cosine similarity between two 1D arrays
+function cosineSimilarity(vecA, vecB) {
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
+  for (let i = 0; i < vecA.length; i++) {
+    dotProduct += vecA[i] * vecB[i];
+    normA += vecA[i] * vecA[i];
+    normB += vecB[i] * vecB[i];
+  }
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+// Function to generate embedding
+async function generateEmbedding(text) {
+  if (!extractor) return null;
+  const output = await extractor(text, { pooling: 'mean', normalize: true });
+  return Array.from(output.data);
+}
+
+// Load model and generate embeddings for all resources
+async function initializeSemanticSearch() {
+  try {
+    extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+    
+    // Generate embeddings for resources
+    searchStatus.textContent = "Processing resource data...";
+    for (let resource of dataResources) {
+      const textToEmbed = `${resource.title} ${resource.description} ${resource.tags.join(' ')}`;
+      resource.embedding = await generateEmbedding(textToEmbed);
+    }
+    
+    searchInput.disabled = false;
+    searchStatus.textContent = "Semantic search is ready!";
+    setTimeout(() => { searchStatus.style.display = 'none'; }, 3000);
+  } catch (error) {
+    console.error("Error initializing semantic search:", error);
+    searchStatus.textContent = "Failed to load semantic search.";
+  }
+}
+
+// Render resources
+async function renderResources() {
   resourcesContainer.innerHTML = "";
+  
+  let queryEmbedding = null;
+  if (searchQuery.trim() !== "" && extractor) {
+    queryEmbedding = await generateEmbedding(searchQuery);
+  }
 
-  let resourcesToDisplay = dataResources.filter((resourceData) => {
+  let resourcesToDisplay = dataResources.map(resource => {
+    let score = 0;
+    if (queryEmbedding && resource.embedding) {
+      score = cosineSimilarity(queryEmbedding, resource.embedding);
+    }
+    return { ...resource, score };
+  });
+
+  resourcesToDisplay = resourcesToDisplay.filter((resourceData) => {
     const domainMatch = selectedDomain
       ? resourceData.tags.includes(selectedDomain)
       : true;
     const typeMatch = selectedType
       ? resourceData.tags.includes(selectedType)
       : true;
-    return domainMatch && typeMatch;
+      
+    // If there is a search query, filter out items with low similarity score
+    const searchMatch = queryEmbedding ? resourceData.score > 0.15 : true;
+    
+    return domainMatch && typeMatch && searchMatch;
   });
 
-  resourcesToDisplay.sort((a, b) => a.link.localeCompare(b.link));
+  if (queryEmbedding) {
+    // Sort by similarity score descending
+    resourcesToDisplay.sort((a, b) => b.score - a.score);
+  } else {
+    // Original sort logic
+    resourcesToDisplay.sort((a, b) => a.link.localeCompare(b.link));
+  }
   
   resourcesToDisplay.forEach((resource) => {
     const card = document.createElement('a');
@@ -63,6 +137,7 @@ function renderResources() {
   });
 }
 
+// Event Listeners
 domainFilters.forEach(btn => {
     btn.addEventListener("click", function() {
         const tag = this.id;
@@ -93,4 +168,16 @@ typeFilters.forEach(btn => {
     });
 });
 
+searchInput.addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+    clearTimeout(searchDebounceTimeout);
+    searchDebounceTimeout = setTimeout(() => {
+        renderResources();
+    }, 300); // 300ms debounce
+});
+
+// Initial Render
 renderResources();
+
+// Initialize Semantic Search
+initializeSemanticSearch();
