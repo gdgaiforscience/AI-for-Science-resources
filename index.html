@@ -21,6 +21,10 @@
   </div>
 
   <section class="text-center">
+    <div id="search-container" style="margin-bottom: 20px;">
+      <input type="text" id="searchInput" placeholder="Semantic search..." style="width: 100%; max-width: 500px; padding: 12px; border-radius: 24px; border: 1px solid var(--border-color); font-size: 1rem; outline: none; box-sizing: border-box;" disabled />
+      <div id="searchStatus" style="font-size: 0.85rem; color: var(--secondary-text); margin-top: 8px;">Loading AI model for semantic search... (this may take a moment)</div>
+    </div>
     <div id="domain-filters">
       <span class="filter-label">Domain:</span>
       <button id="Health" class="btnFilter">Health</button>
@@ -43,6 +47,6 @@
   </div>
 
   <script src="dataResources.js"></script>
-  <script src="index.js"></script>
+  <script type="module" src="index.js"></script>
 </body>
 </html>
